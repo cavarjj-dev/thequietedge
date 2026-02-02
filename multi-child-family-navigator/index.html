@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Child Family Navigator - Interactive Tool | The Quiet Edge</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f0f7f4 0%, #e8f5e9 100%);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #1a4d2e;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .subtitle {
+            color: #2d5f3f;
+            font-size: 1.2em;
+            text-align: center;
+            font-style: italic;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            color: #1a4d2e;
+            font-size: 1.8em;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #2d5f3f;
+        }
+
+        h3 {
+            color: #2d5f3f;
+            font-size: 1.3em;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        .research-box {
+            background: #f0f7f4;
+            border-left: 4px solid #2d5f3f;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 4px;
+        }
+
+        .research-box strong {
+            color: #1a4d2e;
+        }
+
+        .citation {
+            font-size: 0.9em;
+            color: #666;
+            font-style: italic;
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+
+        .section {
+            margin: 30px 0;
+            padding: 20px 0;
+        }
+
+        .assessment-item {
+            background: #fafafa;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .assessment-item label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        input[type="text"], input[type="number"], textarea, select {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus, input[type="number"]:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #2d5f3f;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .checkbox-group {
+            margin: 10px 0;
+        }
+
+        .checkbox-group label {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .checkbox-group label:hover {
+            background: #f5f5f5;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        .button {
+            background: #2d5f3f;
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin: 10px 5px;
+        }
+
+        .button:hover {
+            background: #1a4d2e;
+        }
+
+        .button-secondary {
+            background: #666;
+        }
+
+        .button-secondary:hover {
+            background: #444;
+        }
+
+        .results {
+            background: #fff9e6;
+            border: 2px solid #cc9900;
+            padding: 30px;
+            margin: 30px 0;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .results h3 {
+            color: #cc9900;
+            margin-top: 0;
+        }
+
+        .results ul {
+            margin: 15px 0;
+            padding-left: 25px;
+        }
+
+        .results li {
+            margin: 10px 0;
+        }
+
+        .warning-box {
+            background: #ffe6e6;
+            border: 2px solid #cc0000;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .warning-box h4 {
+            color: #cc0000;
+            margin-bottom: 10px;
+        }
+
+        .success-box {
+            background: #e6f7e6;
+            border: 2px solid #009900;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .success-box h4 {
+            color: #009900;
+            margin-bottom: 10px;
+        }
+
+        .framework-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .framework-table th {
+            background: #2d5f3f;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .framework-table td {
+            padding: 12px;
+            border: 1px solid #ddd;
+        }
+
+        .framework-table tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #2d5f3f;
+            transition: width 0.3s;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin: 30px 0;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        ul {
+            margin: 15px 0;
+            padding-left: 25px;
+        }
+
+        li {
+            margin: 8px 0;
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+            .button {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            h1 {
+                font-size: 2em;
+            }
+            .nav-buttons {
+                flex-direction: column;
+            }
+            .button {
+                width: 100%;
+                margin: 5px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>THE QUIET EDGE</h1>
+        <p class="subtitle">Multi-Child Family Navigator - Interactive Tool</p>
+
+        <!-- Progress Indicator -->
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressBar" style="width: 14%"></div>
+        </div>
+
+        <!-- STEP 1: Basic Information -->
+        <div class="step" id="step1">
+            <h2>Step 1: Family Overview</h2>
+            <div class="research-box">
+                <strong>Welcome!</strong> This interactive tool will help you assess your multi-child sports family dynamics and receive personalized recommendations based on research in youth sports development, sibling relationships, and family systems.
+            </div>
+
+            <div class="assessment-item">
+                <label for="numChildren">How many children do you have participating in youth sports?</label>
+                <select id="numChildren">
+                    <option value="2">2 children</option>
+                    <option value="3">3 children</option>
+                    <option value="4">4 children</option>
+                    <option value="5">5+ children</option>
+                </select>
+            </div>
+
+            <div class="assessment-item">
+                <label>What are their ages? (comma separated, e.g., 10, 12, 14)</label>
+                <input type="text" id="childAges" placeholder="e.g., 10, 12, 14">
+            </div>
+
+            <div class="assessment-item">
+                <label>What sports do they play? (Be specific - e.g., Child 1: Soccer, Child 2: Basketball, etc.)</label>
+                <textarea id="childSports" placeholder="List each child's sport(s)"></textarea>
+            </div>
+
+            <div class="assessment-item">
+                <label>Any children in the same sport?</label>
+                <select id="sameSport">
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                </select>
+            </div>
+
+            <div class="nav-buttons">
+                <button class="button" onclick="nextStep(2)">Next →</button>
+            </div>
+        </div>
+
+        <!-- STEP 2: Resource Allocation Audit -->
+        <div class="step hidden" id="step2">
+            <h2>Step 2: Resource Allocation Audit</h2>
+            <div class="research-box">
+                <strong>Research Finding:</strong> With each additional child, family resources (time, money, attention) must be divided. This reduction matters most during critical developmental windows (ages 8-12). <span class="citation">(Davis & Meyer, 2008)</span>
+            </div>
+
+            <h3>Complete this audit for each child:</h3>
+
+            <div class="assessment-item">
+                <label>Child 1 - Monthly sports budget ($):</label>
+                <input type="number" id="budget1" min="0" placeholder="0">
+            </div>
+
+            <div class="assessment-item">
+                <label>Child 1 - Games attended last month:</label>
+                <input type="number" id="games1" min="0" placeholder="0">
+            </div>
+
+            <div class="assessment-item">
+                <label>Child 1 - One-on-one time (hours per week):</label>
+                <input type="number" id="time1" min="0" step="0.5" placeholder="0">
+            </div>
+
+            <div class="assessment-item">
+                <label>Child 2 - Monthly sports budget ($):</label>
+                <input type="number" id="budget2" min="0" placeholder="0">
+            </div>
+
+            <div class="assessment-item">
+                <label>Child 2 - Games attended last month:</label>
+                <input type="number" id="games2" min="0" placeholder="0">
+            </div>
+
+            <div class="assessment-item">
+                <label>Child 2 - One-on-one time (hours per week):</label>
+                <input type="number" id="time2" min="0" step="0.5" placeholder="0">
+            </div>
+
+            <div class="nav-buttons">
+                <button class="button button-secondary" onclick="nextStep(1)">← Back</button>
+                <button class="button" onclick="nextStep(3)">Next →</button>
+            </div>
+        </div>
+
+        <!-- STEP 3: Comparison Warning Signs -->
+        <div class="step hidden" id="step3">
+            <h2>Step 3: Social Comparison Assessment</h2>
+            <div class="research-box">
+                <strong>The Reality:</strong> Siblings compare themselves to each other constantly. The question isn't whether this happens, but whether it becomes toxic or constructive.
+            </div>
+
+            <h3>Check any that apply to your family:</h3>
+            <div class="checkbox-group">
+                <label><input type="checkbox" class="warning-sign" value="1"> One child regularly compares self unfavorably to sibling</label>
+                <label><input type="checkbox" class="warning-sign" value="1"> One child has stopped trying/stopped caring about performance</label>
+                <label><input type="checkbox" class="warning-sign" value="1"> Siblings don't celebrate each other's wins</label>
+                <label><input type="checkbox" class="warning-sign" value="1"> One child expresses resentment about resources going to sibling</label>
+                <label><input type="checkbox" class="warning-sign" value="1"> You find yourself comparing children's performances (even mentally)</label>
+                <label><input type="checkbox" class="warning-sign" value="1"> Conflicts between children often center on sports</label>
+                <label><input type="checkbox" class="warning-sign" value="1"> One child's identity is solely tied to being 'better than' sibling</label>
+                <label><input type="checkbox" class="warning-sign" value="1"> One child avoids sports that sibling excels in</label>
+            </div>
+
+            <div class="nav-buttons">
+                <button class="button button-secondary" onclick="nextStep(2)">← Back</button>
+                <button class="button" onclick="nextStep(4)">Next →</button>
+            </div>
+        </div>
+
+        <!-- STEP 4: Sibling Relationship Health -->
+        <div class="step hidden" id="step4">
+            <h2>Step 4: Sibling Relationship Health Check</h2>
+            <h3>Positive Indicators (check all that apply):</h3>
+            <div class="checkbox-group">
+                <label><input type="checkbox" class="positive-sign" value="1"> Siblings watch/support each other at games voluntarily</label>
+                <label><input type="checkbox" class="positive-sign" value="1"> They talk about each other's sports positively</label>
+                <label><input type="checkbox" class="positive-sign" value="1"> They practice together informally (when applicable)</label>
+                <label><input type="checkbox" class="positive-sign" value="1"> They defend each other against outside comparison</label>
+                <label><input type="checkbox" class="positive-sign" value="1"> They seek each other's advice/feedback</label>
+                <label><input type="checkbox" class="positive-sign" value="1"> They show genuine happiness at each other's success</label>
+            </div>
+
+            <div class="nav-buttons">
+                <button class="button button-secondary" onclick="nextStep(3)">← Back</button>
+                <button class="button" onclick="nextStep(5)">Next →</button>
+            </div>
+        </div>
+
+        <!-- STEP 5: Current Challenges -->
+        <div class="step hidden" id="step5">
+            <h2>Step 5: Your Biggest Challenges</h2>
+            
+            <div class="assessment-item">
+                <label>What's your biggest challenge managing multiple children in sports?</label>
+                <textarea id="biggestChallenge" placeholder="Describe your main struggle..."></textarea>
+            </div>
+
+            <div class="assessment-item">
+                <label>Which specific situation would you most like help navigating?</label>
+                <select id="specificScenario">
+                    <option value="">Select a scenario...</option>
+                    <option value="same-sport-different-levels">Same sport, different skill levels</option>
+                    <option value="one-quit">One child wants to quit while other thrives</option>
+                    <option value="younger-surpasses">Younger child surpassing older sibling</option>
+                    <option value="resource-imbalance">Major resource imbalance (one elite, one rec)</option>
+                    <option value="schedule-conflicts">Constant schedule conflicts</option>
+                    <option value="comparison-toxicity">Toxic comparison between siblings</option>
+                    <option value="identity-issues">One child's identity overshadowed by sibling's success</option>
+                </select>
+            </div>
+
+            <div class="nav-buttons">
+                <button class="button button-secondary" onclick="nextStep(4)">← Back</button>
+                <button class="button" onclick="generateResults()">Generate My Report →</button>
+            </div>
+        </div>
+
+        <!-- RESULTS -->
+        <div class="results" id="results">
+            <h2>Your Personalized Multi-Child Family Navigation Report</h2>
+            <div id="resultsContent"></div>
+            <div class="nav-buttons">
+                <button class="button" onclick="window.print()">Print Report</button>
+                <button class="button button-secondary" onclick="resetTool()">Start Over</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function nextStep(stepNumber) {
+            // Hide all steps
+            document.querySelectorAll('.step').forEach(step => {
+                step.classList.add('hidden');
+            });
+            
+            // Show requested step
+            document.getElementById('step' + stepNumber).classList.remove('hidden');
+            
+            // Update progress bar
+            const progress = (stepNumber / 5) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        function generateResults() {
+            // Collect all data
+            const data = {
+                numChildren: parseInt(document.getElementById('numChildren').value),
+                ages: document.getElementById('childAges').value,
+                sports: document.getElementById('childSports').value,
+                sameSport: document.getElementById('sameSport').value,
+                budget1: parseInt(document.getElementById('budget1').value) || 0,
+                budget2: parseInt(document.getElementById('budget2').value) || 0,
+                games1: parseInt(document.getElementById('games1').value) || 0,
+                games2: parseInt(document.getElementById('games2').value) || 0,
+                time1: parseFloat(document.getElementById('time1').value) || 0,
+                time2: parseFloat(document.getElementById('time2').value) || 0,
+                warningCount: document.querySelectorAll('.warning-sign:checked').length,
+                positiveCount: document.querySelectorAll('.positive-sign:checked').length,
+                challenge: document.getElementById('biggestChallenge').value,
+                scenario: document.getElementById('specificScenario').value
+            };
+
+            // Generate personalized report
+            let html = '';
+
+            // Resource Analysis
+            html += '<h3>1. Resource Allocation Analysis</h3>';
+            const budgetDiff = Math.abs(data.budget1 - data.budget2);
+            const gamesDiff = Math.abs(data.games1 - data.games2);
+            const timeDiff = Math.abs(data.time1 - data.time2);
+
+            if (budgetDiff > data.budget1 * 0.5 || gamesDiff > 3 || timeDiff > 2) {
+                html += '<div class="warning-box"><h4>⚠️ Significant Resource Imbalance Detected</h4>';
+                html += '<p><strong>Current Distribution:</strong></p>';
+                html += '<ul>';
+                html += '<li>Child 1: $' + data.budget1 + '/month, ' + data.games1 + ' games, ' + data.time1 + ' hrs/week</li>';
+                html += '<li>Child 2: $' + data.budget2 + '/month, ' + data.games2 + ' games, ' + data.time2 + ' hrs/week</li>';
+                html += '</ul>';
+                html += '<p><strong>Recommendation:</strong> This level of difference can create resentment unless clearly justified and openly discussed. Review "Fair ≠ Equal" framework below.</p>';
+                html += '</div>';
+            } else {
+                html += '<div class="success-box"><h4>✓ Resource Distribution Appears Balanced</h4>';
+                html += '<p>Your resource allocation shows relatively equal investment. Continue monitoring quarterly to ensure this remains intentional.</p>';
+                html += '</div>';
+            }
+
+            // Comparison Warning Analysis
+            html += '<h3>2. Sibling Comparison Health Assessment</h3>';
+            if (data.warningCount >= 3) {
+                html += '<div class="warning-box"><h4>⚠️ High Risk: Toxic Comparison Patterns Present</h4>';
+                html += '<p>You checked ' + data.warningCount + ' warning signs. This indicates sibling comparison is becoming harmful.</p>';
+                html += '<p><strong>Immediate Actions:</strong></p>';
+                html += '<ul>';
+                html += '<li>Have one-on-one conversations with each child about their experience</li>';
+                html += '<li>Implement "Identity Protection Strategy" (see recommendations below)</li>';
+                html += '<li>Consider family therapy if patterns don\'t improve in 4-6 weeks</li>';
+                if (data.sameSport === 'yes') {
+                    html += '<li><strong>CRITICAL:</strong> Same-sport siblings amplify comparison. Consider having them play different positions or explore one child trying a second sport.</li>';
+                }
+                html += '</ul>';
+                html += '<p class="citation">Research shows that toxic sibling comparison is the #1 predictor of early dropout in multi-child families (Davis & Meyer, 2008)</p>';
+                html += '</div>';
+            } else if (data.warningCount >= 1) {
+                html += '<div class="warning-box"><h4>⚠️ Moderate Risk: Some Comparison Concerns</h4>';
+                html += '<p>You checked ' + data.warningCount + ' warning sign(s). Monitor closely and take preventive action.</p>';
+                html += '</div>';
+            } else {
+                html += '<div class="success-box"><h4>✓ Low Comparison Risk</h4>';
+                html += '<p>No major warning signs detected. Continue fostering individual identities and domains of excellence.</p>';
+                html += '</div>';
+            }
+
+            // Positive Indicators
+            html += '<h3>3. Sibling Support Strengths</h3>';
+            html += '<p>You checked ' + data.positiveCount + ' out of 6 positive indicators.</p>';
+            if (data.positiveCount >= 4) {
+                html += '<div class="success-box"><h4>✓ Strong Sibling Support System</h4>';
+                html += '<p>Your children show healthy mutual support. This is a significant protective factor. Continue encouraging these behaviors.</p>';
+                html += '</div>';
+            } else if (data.positiveCount >= 2) {
+                html += '<p><strong>Moderate support present.</strong> Look for opportunities to strengthen sibling bonds around sports:</p>';
+                html += '<ul>';
+                html += '<li>Encourage them to watch each other compete when possible</li>';
+                html += '<li>Create family rituals celebrating both children\'s efforts</li>';
+                html += '<li>Have older sibling mentor younger in age-appropriate ways</li>';
+                html += '</ul>';
+            } else {
+                html += '<div class="warning-box"><h4>⚠️ Limited Sibling Support</h4>';
+                html += '<p>Few positive support indicators suggest siblings may be disconnected around sports. This increases comparison risk.</p>';
+                html += '<p><strong>Action Steps:</strong> Explicitly teach and reward supportive behaviors. Make it clear that family unity matters more than individual success.</p>';
+                html += '</div>';
+            }
+
+            // Scenario-Specific Guidance
+            if (data.scenario) {
+                html += '<h3>4. Specific Scenario Guidance: ' + getScenarioName(data.scenario) + '</h3>';
+                html += getScenarioGuidance(data.scenario);
+            }
+
+            // Personalized Action Plan
+            html += '<h3>5. Your Personalized Action Plan</h3>';
+            html += '<div class="assessment-item">';
+            html += '<h4>Immediate Actions (This Week):</h4>';
+            html += '<ol>';
+            
+            if (data.warningCount >= 3) {
+                html += '<li>Schedule one-on-one check-ins with each child</li>';
+                html += '<li>Review and implement Identity Protection Strategy</li>';
+            }
+            
+            if (budgetDiff > data.budget1 * 0.5) {
+                html += '<li>Have transparent conversation with both children about resource allocation</li>';
+            }
+            
+            if (data.sameSport === 'yes' && data.warningCount >= 2) {
+                html += '<li>Discuss with children whether one might enjoy exploring a second sport</li>';
+            }
+            
+            html += '<li>Complete the Family Sports Values conversation (see framework below)</li>';
+            html += '<li>Create shared calendar visible to both children showing attendance plan</li>';
+            html += '</ol>';
+
+            html += '<h4>Monthly Actions:</h4>';
+            html += '<ul>';
+            html += '<li>Individual check-in with each child using provided questions</li>';
+            html += '<li>Review resource allocation audit</li>';
+            html += '<li>Assess comparison warning signs</li>';
+            html += '</ul>';
+
+            html += '<h4>Quarterly Review:</h4>';
+            html += '<ul>';
+            html += '<li>Complete this assessment again to track progress</li>';
+            html += '<li>Adjust approach based on developmental changes</li>';
+            html += '<li>Family meeting to discuss what\'s working and what needs adjustment</li>';
+            html += '</ul>';
+            html += '</div>';
+
+            // Key Frameworks
+            html += '<h3>6. Key Research-Based Frameworks</h3>';
+            
+            html += '<h4>"Fair ≠ Equal" Framework</h4>';
+            html += '<div class="research-box">';
+            html += '<p><strong>Principle:</strong> Fair means meeting each child\'s needs, not giving everyone identical treatment.</p>';
+            html += '<table class="framework-table">';
+            html += '<tr><th>Instead of...</th><th>Consider...</th></tr>';
+            html += '<tr><td>Same budget per child</td><td>Budget based on commitment level and age</td></tr>';
+            html += '<tr><td>Equal attendance at all games</td><td>Prioritize games based on importance to each child</td></tr>';
+            html += '<tr><td>Identical expectations</td><td>Age-appropriate and individually-tailored goals</td></tr>';
+            html += '</table>';
+            html += '<p><strong>Communication Strategy:</strong> "Right now, your sister needs more intensive coaching. When you\'re ready for that, we\'ll support you too."</p>';
+            html += '</div>';
+
+            html += '<h4>Identity Protection Strategy</h4>';
+            html += '<div class="research-box">';
+            html += '<p><strong>Goal:</strong> Ensure each child has domains where they can excel separate from siblings.</p>';
+            html += '<ul>';
+            html += '<li><strong>Different sports</strong> (reduces direct comparison)</li>';
+            html += '<li><strong>Different positions</strong> within same sport</li>';
+            html += '<li><strong>Recognition for different qualities</strong> (one is "hardest worker," other is "most improved")</li>';
+            html += '<li><strong>Non-sport identities</strong> equally valued (academics, arts, etc.)</li>';
+            html += '</ul>';
+            html += '<p class="citation">Côté, J. (1999). The influence of the family in the development of talent in sport.</p>';
+            html += '</div>';
+
+            html += '<h3>7. Research References</h3>';
+            html += '<div class="citation">';
+            html += '<p>Côté, J. (1999). The influence of the family in the development of talent in sport. The Sport Psychologist, 13(4), 395-417.</p>';
+            html += '<p>Davis, N. W., & Meyer, B. B. (2008). When sibling becomes competitor: A qualitative investigation of same-sex sibling competition in elite sport. Journal of Applied Sport Psychology, 20(2), 220-235.</p>';
+            html += '<p>Hopwood, M. J., Farrow, D., MacMahon, C., & Baker, J. (2015). Sibling dynamics and sport expertise. Scandinavian Journal of Medicine & Science in Sports, 25(5), 724-733.</p>';
+            html += '<p>Sulloway, F. J. (2007). Birth order and sibling competition. In C. Salmon & T. Shackelford (Eds.), Family relationships: An evolutionary perspective.</p>';
+            html += '</div>';
+
+            // Display results
+            document.getElementById('resultsContent').innerHTML = html;
+            document.querySelectorAll('.step').forEach(step => step.classList.add('hidden'));
+            document.getElementById('results').style.display = 'block';
+            document.getElementById('progressBar').style.width = '100%';
+            window.scrollTo(0, 0);
+        }
+
+        function getScenarioName(scenario) {
+            const names = {
+                'same-sport-different-levels': 'Same Sport, Different Skill Levels',
+                'one-quit': 'One Child Wants to Quit',
+                'younger-surpasses': 'Younger Child Surpassing Older Sibling',
+                'resource-imbalance': 'Major Resource Imbalance',
+                'schedule-conflicts': 'Schedule Conflict Management',
+                'comparison-toxicity': 'Toxic Comparison',
+                'identity-issues': 'Identity Overshadowed by Sibling'
+            };
+            return names[scenario] || '';
+        }
+
+        function getScenarioGuidance(scenario) {
+            const guidance = {
+                'same-sport-different-levels': `
+                    <div class="research-box">
+                    <p><strong>Your Situation:</strong> Both children in same sport but different competitive levels.</p>
+                    <p><strong>Research-Based Approach:</strong></p>
+                    <ul>
+                        <li>Emphasize that different stages require different levels of commitment</li>
+                        <li>Celebrate younger/lower-level child's growth at their level, not relative to sibling</li>
+                        <li>Create specialized roles (older can mentor younger in skills)</li>
+                        <li>Ensure lower-level child has opportunities to be "the star" in their context</li>
+                        <li>CRITICAL: Never use older/higher-level child as measuring stick for younger</li>
+                    </ul>
+                    <p><strong>What to Say:</strong> "You're at different stages in your soccer journey. Your success isn't about catching up to your brother - it's about becoming the best version of YOUR game."</p>
+                    </div>
+                `,
+                'one-quit': `
+                    <div class="research-box">
+                    <p><strong>Your Situation:</strong> One child losing interest while sibling thrives.</p>
+                    <p><strong>Research-Based Approach:</strong></p>
+                    <ul>
+                        <li>Normalize that different children have different paths</li>
+                        <li>Investigate WHY - is it comparison-driven or genuine lack of interest?</li>
+                        <li>Ensure quitting child has equally valued alternative activities</li>
+                        <li>Don't allow continuing child to use it as ammunition</li>
+                        <li>Watch for signs quitting is driven by comparison rather than genuine disinterest</li>
+                    </ul>
+                    <p><strong>Critical Question:</strong> "If your sibling didn't play, would you still want to quit?" The answer tells you if comparison is driving the decision.</p>
+                    </div>
+                `,
+                'younger-surpasses': `
+                    <div class="warning-box">
+                    <h4>HIGH-RISK SITUATION</h4>
+                    <p><strong>Your Situation:</strong> Younger sibling showing superior talent or achievement.</p>
+                    <p><strong>Why This Is Delicate:</strong> Can be devastating to older child's identity and create lasting resentment.</p>
+                    <p><strong>Research-Based Approach:</strong></p>
+                    <ul>
+                        <li><strong>Private conversation with older child</strong> validating disappointment feelings</li>
+                        <li><strong>Help older child find other domains of competence</strong> (different sport, position, or non-sport activity)</li>
+                        <li><strong>Explicitly forbid younger child from "rubbing it in"</strong></li>
+                        <li><strong>Find ways older child can contribute</strong> that restore some status (mentoring, team leadership)</li>
+                        <li><strong>Consider whether older child wants to continue</strong> - forcing it may cause resentment</li>
+                    </ul>
+                    <p><strong>What NOT to Say:</strong> "You should be happy for your sister" (they're allowed to feel disappointed)</p>
+                    <p><strong>What TO Say:</strong> "I know this is hard. Your path and hers are different - that doesn't make yours less valuable."</p>
+                    <p class="citation">Davis & Meyer (2008) found this scenario creates highest risk for sibling rivalry and family conflict.</p>
+                    </div>
+                `,
+                'resource-imbalance': `
+                    <div class="research-box">
+                    <p><strong>Your Situation:</strong> One child at elite level requiring significantly more resources.</p>
+                    <p><strong>Research-Based Approach:</strong></p>
+                    <p><strong>With Elite-Track Child:</strong></p>
+                    <ul>
+                        <li>"We're investing more because you're at a critical stage"</li>
+                        <li>"This comes with responsibility - show gratitude and support sibling"</li>
+                        <li>"Your identity is bigger than just [sport] - maintain other interests"</li>
+                    </ul>
+                    <p><strong>With Other Sibling:</strong></p>
+                    <ul>
+                        <li>"Your sibling needs more intensive support right now"</li>
+                        <li>"That doesn't mean your sports aren't important"</li>
+                        <li>"If you reach this level, we'll support you similarly"</li>
+                        <li>"Let's make sure you have things that are YOURS that we celebrate"</li>
+                    </ul>
+                    <p><strong>Key:</strong> Transparency about the why, plus ensuring non-elite child has their own domains of recognition.</p>
+                    </div>
+                `,
+                'schedule-conflicts': `
+                    <div class="research-box">
+                    <p><strong>Your Situation:</strong> Constant scheduling conflicts requiring tough choices.</p>
+                    <p><strong>Decision Matrix:</strong></p>
+                    <p><strong>HIGH PRIORITY (attend if possible):</strong></p>
+                    <ul>
+                        <li>Championship/playoff games</li>
+                        <li>First game of season or tryout</li>
+                        <li>Child has specifically requested your presence</li>
+                        <li>Child is struggling and needs visible support</li>
+                    </ul>
+                    <p><strong>MEDIUM PRIORITY (rotate attendance):</strong></p>
+                    <ul>
+                        <li>Regular season games</li>
+                        <li>Practices with parent viewing</li>
+                    </ul>
+                    <p><strong>SOLUTION:</strong> Create monthly attendance plan and share in advance. "This month I'll be at most of Jake's games since playoffs, but I'll catch three of Sarah's. Next month we'll flip."</p>
+                    <p><strong>Key:</strong> Predictability reduces feelings of favoritism more than perfect equality.</p>
+                    </div>
+                `,
+                'comparison-toxicity': `
+                    <div class="warning-box">
+                    <h4>IMMEDIATE INTERVENTION NEEDED</h4>
+                    <p><strong>Your Situation:</strong> Comparison has become toxic and harmful.</p>
+                    <p><strong>Signs You're Here:</strong> Constant negative self-comparison, resentment, conflict, or one child has given up.</p>
+                    <p><strong>Immediate Actions:</strong></p>
+                    <ol>
+                        <li><strong>Stop all comparisons</strong> - even positive ones ("You're as good as your brother!")</li>
+                        <li><strong>Individual conversations</strong> with each child about their unique journey</li>
+                        <li><strong>Create separate domains</strong> - different sports, positions, or recognition types</li>
+                        <li><strong>Family meeting</strong> establishing "no comparison" rule and consequences</li>
+                        <li><strong>Consider family therapy</strong> if patterns persist beyond 4-6 weeks</li>
+                    </ol>
+                    <p><strong>Research Note:</strong> Toxic sibling comparison is reversible with consistent intervention, but requires active parental management for 3-6 months.</p>
+                    </div>
+                `,
+                'identity-issues': `
+                    <div class="research-box">
+                    <p><strong>Your Situation:</strong> One child's athletic identity overshadowing sibling.</p>
+                    <p><strong>Identity Protection Plan:</strong></p>
+                    <ul>
+                        <li><strong>Find second domain for overshadowed child</strong> - different sport, academic strength, artistic talent</li>
+                        <li><strong>Equal celebration</strong> of both children's achievements in their domains</li>
+                        <li><strong>Avoid "athlete child" vs "other child" framing</strong> in family conversations</li>
+                        <li><strong>Highlight non-sport qualities</strong> of high-achieving athlete too</li>
+                        <li><strong>Ensure overshadowed child has their own "expert" domain</strong></li>
+                    </ul>
+                    <p><strong>Conversation Framework:</strong> "In our family, everyone gets to be great at something. [Child 1] is great at soccer AND piano. [Child 2] is great at basketball AND science. We celebrate all of it."</p>
+                    </div>
+                `
+            };
+            return guidance[scenario] || '';
+        }
+
+        function resetTool() {
+            // Reset all form inputs
+            document.querySelectorAll('input, textarea, select').forEach(element => {
+                if (element.type === 'checkbox') {
+                    element.checked = false;
+                } else {
+                    element.value = '';
+                }
+            });
+            
+            // Show first step
+            nextStep(1);
+            
+            // Hide results
+            document.getElementById('results').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
