@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Co-Parenting Through Youth Sports - Interactive Tool | The Quiet Edge</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f0f7f4 0%, #e8f5e9 100%);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #1a4d2e;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .subtitle {
+            color: #2d5f3f;
+            font-size: 1.2em;
+            text-align: center;
+            font-style: italic;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            color: #1a4d2e;
+            font-size: 1.8em;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #2d5f3f;
+        }
+
+        h3 {
+            color: #2d5f3f;
+            font-size: 1.3em;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        h4 {
+            color: #1a4d2e;
+            font-size: 1.1em;
+            margin-top: 15px;
+            margin-bottom: 10px;
+        }
+
+        .research-box {
+            background: #f0f7f4;
+            border-left: 4px solid #2d5f3f;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 4px;
+        }
+
+        .research-box strong {
+            color: #1a4d2e;
+        }
+
+        .citation {
+            font-size: 0.9em;
+            color: #666;
+            font-style: italic;
+            margin: 10px 0;
+        }
+
+        .model-box {
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            border: 2px solid;
+        }
+
+        .model-conflicted {
+            background: #ffe6e6;
+            border-color: #cc0000;
+        }
+
+        .model-parallel {
+            background: #fff3e6;
+            border-color: #cc6600;
+        }
+
+        .model-cooperative {
+            background: #e6f7e6;
+            border-color: #009900;
+        }
+
+        .model-disengaged {
+            background: #f0f0f0;
+            border-color: #666666;
+        }
+
+        .section {
+            margin: 30px 0;
+            padding: 20px 0;
+        }
+
+        .assessment-item {
+            background: #fafafa;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .assessment-item label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        input[type="text"], input[type="number"], textarea, select {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus, input[type="number"]:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #2d5f3f;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .radio-group, .checkbox-group {
+            margin: 15px 0;
+        }
+
+        .radio-group label, .checkbox-group label {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            cursor: pointer;
+            transition: background 0.2s;
+            font-weight: normal;
+        }
+
+        .radio-group label:hover, .checkbox-group label:hover {
+            background: #f5f5f5;
+        }
+
+        .radio-group input[type="radio"], .checkbox-group input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        .scale-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            margin: 10px 0;
+            background: #fafafa;
+            border-radius: 6px;
+        }
+
+        .scale-item span {
+            flex: 1;
+        }
+
+        .scale-options {
+            display: flex;
+            gap: 15px;
+        }
+
+        .scale-options label {
+            cursor: pointer;
+        }
+
+        .button {
+            background: #2d5f3f;
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin: 10px 5px;
+        }
+
+        .button:hover {
+            background: #1a4d2e;
+        }
+
+        .button-secondary {
+            background: #666;
+        }
+
+        .button-secondary:hover {
+            background: #444;
+        }
+
+        .results {
+            background: #fff9e6;
+            border: 2px solid #cc9900;
+            padding: 30px;
+            margin: 30px 0;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .results h3 {
+            color: #cc9900;
+            margin-top: 20px;
+        }
+
+        .results ul {
+            margin: 15px 0;
+            padding-left: 25px;
+        }
+
+        .results li {
+            margin: 10px 0;
+        }
+
+        .warning-box {
+            background: #ffe6e6;
+            border: 2px solid #cc0000;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .warning-box h4 {
+            color: #cc0000;
+            margin-bottom: 10px;
+        }
+
+        .success-box {
+            background: #e6f7e6;
+            border: 2px solid #009900;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .success-box h4 {
+            color: #009900;
+            margin-bottom: 10px;
+        }
+
+        .info-box {
+            background: #e6f2ff;
+            border: 2px solid #0066cc;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .info-box h4 {
+            color: #0066cc;
+            margin-bottom: 10px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #2d5f3f;
+            transition: width 0.3s;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin: 30px 0;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        ul {
+            margin: 15px 0;
+            padding-left: 25px;
+        }
+
+        li {
+            margin: 8px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th {
+            background: #2d5f3f;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+
+        td {
+            padding: 12px;
+            border: 1px solid #ddd;
+        }
+
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+            .button {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            h1 {
+                font-size: 2em;
+            }
+            .nav-buttons {
+                flex-direction: column;
+            }
+            .button {
+                width: 100%;
+                margin: 5px 0;
+            }
+            .scale-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .scale-options {
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>THE QUIET EDGE</h1>
+        <p class="subtitle">Co-Parenting Through Youth Sports - Interactive Assessment</p>
+
+        <!-- Progress Indicator -->
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressBar" style="width: 16%"></div>
+        </div>
+
+        <!-- STEP 1: Current Situation -->
+        <div class="step" id="step1">
+            <h2>Step 1: Your Co-Parenting Context</h2>
+            <div class="research-box">
+                <strong>Key Research Finding:</strong> Frequent parent-child communication about sports matters MORE than the quality of co-parent cooperation. Even if you struggle to work together, you can each support your child effectively. <span class="citation">(Markham et al., 2019)</span>
+            </div>
+
+            <div class="assessment-item">
+                <label for="coparentStatus">What is your current co-parenting relationship status?</label>
+                <select id="coparentStatus">
+                    <option value="">Select...</option>
+                    <option value="divorced">Divorced</option>
+                    <option value="separated">Separated</option>
+                    <option value="never-married">Never married but co-parenting</option>
+                    <option value="other">Other arrangement</option>
+                </select>
+            </div>
+
+            <div class="assessment-item">
+                <label for="timeSinceSeparation">How long have you been co-parenting separately?</label>
+                <select id="timeSinceSeparation">
+                    <option value="">Select...</option>
+                    <option value="less-6-months">Less than 6 months</option>
+                    <option value="6-12-months">6-12 months</option>
+                    <option value="1-2-years">1-2 years</option>
+                    <option value="2-5-years">2-5 years</option>
+                    <option value="5-plus-years">5+ years</option>
+                </select>
+            </div>
+
+            <div class="assessment-item">
+                <label for="childAge">Child's age:</label>
+                <input type="number" id="childAge" min="5" max="18" placeholder="Enter age">
+            </div>
+
+            <div class="assessment-item">
+                <label for="childSport">What sport(s) does your child play?</label>
+                <input type="text" id="childSport" placeholder="e.g., Soccer, Basketball">
+            </div>
+
+            <div class="assessment-item">
+                <label for="competitionLevel">Competition level:</label>
+                <select id="competitionLevel">
+                    <option value="">Select...</option>
+                    <option value="recreational">Recreational/house league</option>
+                    <option value="travel">Travel/club team</option>
+                    <option value="elite">Elite/premier level</option>
+                    <option value="multiple">Multiple sports, mixed levels</option>
+                </select>
+            </div>
+
+            <div class="nav-buttons">
+                <div></div>
+                <button class="button" onclick="nextStep(2)">Next →</button>
+            </div>
+        </div>
+
+        <!-- STEP 2: Readiness Assessment -->
+        <div class="step hidden" id="step2">
+            <h2>Step 2: Co-Parenting Sports Readiness Assessment</h2>
+            <p style="margin-bottom: 20px;">Rate your current co-parenting dynamic on a scale of 1-5 for each statement:</p>
+
+            <div class="scale-item">
+                <span>We communicate about sports decisions without conflict</span>
+                <div class="scale-options">
+                    <label><input type="radio" name="q1" value="1"> 1</label>
+                    <label><input type="radio" name="q1" value="2"> 2</label>
+                    <label><input type="radio" name="q1" value="3"> 3</label>
+                    <label><input type="radio" name="q1" value="4"> 4</label>
+                    <label><input type="radio" name="q1" value="5"> 5</label>
+                </div>
+            </div>
+
+            <div class="scale-item">
+                <span>We present consistent messages to our child about sports</span>
+                <div class="scale-options">
+                    <label><input type="radio" name="q2" value="1"> 1</label>
+                    <label><input type="radio" name="q2" value="2"> 2</label>
+                    <label><input type="radio" name="q2" value="3"> 3</label>
+                    <label><input type="radio" name="q2" value="4"> 4</label>
+                    <label><input type="radio" name="q2" value="5"> 5</label>
+                </div>
+            </div>
+
+            <div class="scale-item">
+                <span>We coordinate logistics smoothly (schedules, transportation)</span>
+                <div class="scale-options">
+                    <label><input type="radio" name="q3" value="1"> 1</label>
+                    <label><input type="radio" name="q3" value="2"> 2</label>
+                    <label><input type="radio" name="q3" value="3"> 3</label>
+                    <label><input type="radio" name="q3" value="4"> 4</label>
+                    <label><input type="radio" name="q3" value="5"> 5</label>
+                </div>
+            </div>
+
+            <div class="scale-item">
+                <span>We share financial responsibilities fairly</span>
+                <div class="scale-options">
+                    <label><input type="radio" name="q4" value="1"> 1</label>
+                    <label><input type="radio" name="q4" value="2"> 2</label>
+                    <label><input type="radio" name="q4" value="3"> 3</label>
+                    <label><input type="radio" name="q4" value="4"> 4</label>
+                    <label><input type="radio" name="q4" value="5"> 5</label>
+                </div>
+            </div>
+
+            <div class="scale-item">
+                <span>We behave respectfully at games in each other's presence</span>
+                <div class="scale-options">
+                    <label><input type="radio" name="q5" value="1"> 1</label>
+                    <label><input type="radio" name="q5" value="2"> 2</label>
+                    <label><input type="radio" name="q5" value="3"> 3</label>
+                    <label><input type="radio" name="q5" value="4"> 4</label>
+                    <label><input type="radio" name="q5" value="5"> 5</label>
+                </div>
+            </div>
+
+            <div class="scale-item">
+                <span>We support each other's parenting approach publicly</span>
+                <div class="scale-options">
+                    <label><input type="radio" name="q6" value="1"> 1</label>
+                    <label><input type="radio" name="q6" value="2"> 2</label>
+                    <label><input type="radio" name="q6" value="3"> 3</label>
+                    <label><input type="radio" name="q6" value="4"> 4</label>
+                    <label><input type="radio" name="q6" value="5"> 5</label>
+                </div>
+            </div>
+
+            <div class="scale-item">
+                <span>We make major sports decisions together</span>
+                <div class="scale-options">
+                    <label><input type="radio" name="q7" value="1"> 1</label>
+                    <label><input type="radio" name="q7" value="2"> 2</label>
+                    <label><input type="radio" name="q7" value="3"> 3</label>
+                    <label><input type="radio" name="q7" value="4"> 4</label>
+                    <label><input type="radio" name="q7" value="5"> 5</label>
+                </div>
+            </div>
+
+            <div class="scale-item">
+                <span>Our child feels comfortable with both of us at games</span>
+                <div class="scale-options">
+                    <label><input type="radio" name="q8" value="1"> 1</label>
+                    <label><input type="radio" name="q8" value="2"> 2</label>
+                    <label><input type="radio" name="q8" value="3"> 3</label>
+                    <label><input type="radio" name="q8" value="4"> 4</label>
+                    <label><input type="radio" name="q8" value="5"> 5</label>
+                </div>
+            </div>
+
+            <div class="nav-buttons">
+                <button class="button button-secondary" onclick="nextStep(1)">← Back</button>
+                <button class="button" onclick="nextStep(3)">Next →</button>
+            </div>
+        </div>
+
+        <!-- STEP 3: Impact on Child -->
+        <div class="step hidden" id="step3">
+            <h2>Step 3: Warning Signs Assessment</h2>
+            <p style="margin-bottom: 20px;">Check any that apply to your child:</p>
+
+            <div class="checkbox-group">
+                <label><input type="checkbox" class="warning-sign" value="1"> Child seems anxious before games when both parents attending</label>
+                <label><input type="checkbox" class="warning-sign" value="1"> Performance notably different depending on which parent is watching</label>
+                <label><input type="checkbox" class="warning-sign" value="1"> Child makes comments about one parent's reaction to other parent</label>
+                <label><input type="checkbox" class="warning-sign" value="1"> Child asks you not to come to games to "avoid drama"</label>
+                <label><input type="checkbox" class="warning-sign" value="1"> Child has stopped talking about sports at home</label>
+                <label><input type="checkbox" class="warning-sign" value="1"> Child tries to manipulate parents against each other for sports advantage</label>
+                <label><input type="checkbox" class="warning-sign" value="1"> Child expresses desire to quit despite previously loving the sport</label>
+                <label><input type="checkbox" class="warning-sign" value="1"> Coach has mentioned child seems distracted or stressed</label>
+            </div>
+
+            <div class="nav-buttons">
+                <button class="button button-secondary" onclick="nextStep(2)">← Back</button>
+                <button class="button" onclick="nextStep(4)">Next →</button>
+            </div>
+        </div>
+
+        <!-- STEP 4: Communication & Logistics -->
+        <div class="step hidden" id="step4">
+            <h2>Step 4: Current Communication & Logistics</h2>
+
+            <div class="assessment-item">
+                <label>How do you currently communicate about sports logistics?</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="commMethod" value="text"> Text messages</label>
+                    <label><input type="radio" name="commMethod" value="email"> Email</label>
+                    <label><input type="radio" name="commMethod" value="app"> Co-parenting app</label>
+                    <label><input type="radio" name="commMethod" value="phone"> Phone calls</label>
+                    <label><input type="radio" name="commMethod" value="child"> Through child (red flag!)</label>
+                    <label><input type="radio" name="commMethod" value="minimal"> Minimal/no communication</label>
+                </div>
+            </div>
+
+            <div class="assessment-item">
+                <label>How often do conflicts arise about sports-related matters?</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="conflictFreq" value="never"> Rarely or never</label>
+                    <label><input type="radio" name="conflictFreq" value="occasional"> Occasionally (few times per season)</label>
+                    <label><input type="radio" name="conflictFreq" value="frequent"> Frequently (multiple times per month)</label>
+                    <label><input type="radio" name="conflictFreq" value="constant"> Constantly (weekly or more)</label>
+                </div>
+            </div>
+
+            <div class="assessment-item">
+                <label>Do you have a shared sports calendar or schedule system?</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="calendar" value="yes-works"> Yes, and it works well</label>
+                    <label><input type="radio" name="calendar" value="yes-issues"> Yes, but we struggle to maintain it</label>
+                    <label><input type="radio" name="calendar" value="no"> No shared system</label>
+                </div>
+            </div>
+
+            <div class="assessment-item">
+                <label>What's your biggest co-parenting challenge related to sports?</label>
+                <textarea id="biggestChallenge" placeholder="Describe your main struggle..."></textarea>
+            </div>
+
+            <div class="nav-buttons">
+                <button class="button button-secondary" onclick="nextStep(3)">← Back</button>
+                <button class="button" onclick="nextStep(5)">Next →</button>
+            </div>
+        </div>
+
+        <!-- STEP 5: Goals & Priorities -->
+        <div class="step hidden" id="step5">
+            <h2>Step 5: Your Goals for This Tool</h2>
+
+            <div class="assessment-item">
+                <label>What do you most hope to improve? (Select up to 3)</label>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" class="goal" value="reduce-conflict"> Reduce conflict between co-parents</label>
+                    <label><input type="checkbox" class="goal" value="better-communication"> Establish better communication systems</label>
+                    <label><input type="checkbox" class="goal" value="logistics"> Coordinate logistics more smoothly</label>
+                    <label><input type="checkbox" class="goal" value="consistency"> Present more consistent approach to child</label>
+                    <label><input type="checkbox" class="goal" value="child-stress"> Reduce stress on child</label>
+                    <label><input type="checkbox" class="goal" value="financial"> Handle financial decisions better</label>
+                    <label><input type="checkbox" class="goal" value="game-behavior"> Improve behavior at games</label>
+                    <label><input type="checkbox" class="goal" value="major-decisions"> Make major decisions together effectively</label>
+                </div>
+            </div>
+
+            <div class="assessment-item">
+                <label>What's one specific situation you need guidance on?</label>
+                <textarea id="specificSituation" placeholder="e.g., 'My co-parent coaches from sideline contradicting team coach' or 'We disagree about whether child should specialize'"></textarea>
+            </div>
+
+            <div class="nav-buttons">
+                <button class="button button-secondary" onclick="nextStep(4)">← Back</button>
+                <button class="button" onclick="generateResults()">Generate My Plan →</button>
+            </div>
+        </div>
+
+        <!-- RESULTS -->
+        <div class="results" id="results">
+            <h2>Your Personalized Co-Parenting Action Plan</h2>
+            <div id="resultsContent"></div>
+            <div class="nav-buttons">
+                <button class="button" onclick="window.print()">Print Plan</button>
+                <button class="button button-secondary" onclick="resetTool()">Start Over</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function nextStep(stepNumber) {
+            document.querySelectorAll('.step').forEach(step => {
+                step.classList.add('hidden');
+            });
+            document.getElementById('step' + stepNumber).classList.remove('hidden');
+            const progress = (stepNumber / 5) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+            window.scrollTo(0, 0);
+        }
+
+        function generateResults() {
+            // Calculate readiness score
+            let score = 0;
+            for (let i = 1; i <= 8; i++) {
+                const selected = document.querySelector(`input[name="q${i}"]:checked`);
+                if (selected) score += parseInt(selected.value);
+            }
+
+            // Get warning signs
+            const warningCount = document.querySelectorAll('.warning-sign:checked').length;
+
+            // Get other data
+            const data = {
+                score: score,
+                warningCount: warningCount,
+                status: document.getElementById('coparentStatus').value,
+                timeSince: document.getElementById('timeSinceSeparation').value,
+                childAge: parseInt(document.getElementById('childAge').value) || 0,
+                sport: document.getElementById('childSport').value,
+                level: document.getElementById('competitionLevel').value,
+                commMethod: document.querySelector('input[name="commMethod"]:checked')?.value || '',
+                conflictFreq: document.querySelector('input[name="conflictFreq"]:checked')?.value || '',
+                calendar: document.querySelector('input[name="calendar"]:checked')?.value || '',
+                challenge: document.getElementById('biggestChallenge').value,
+                situation: document.getElementById('specificSituation').value,
+                goals: Array.from(document.querySelectorAll('.goal:checked')).map(cb => cb.value)
+            };
+
+            // Determine model
+            let model = '';
+            if (score >= 32) model = 'cooperative';
+            else if (score >= 24) model = 'parallel';
+            else if (score >= 16) model = 'needs-structure';
+            else model = 'conflicted';
+
+            // Generate report
+            let html = '';
+
+            // Executive Summary
+            html += '<div class="info-box">';
+            html += '<h3>Your Co-Parenting Profile</h3>';
+            html += '<p><strong>Readiness Score:</strong> ' + score + '/40</p>';
+            html += '<p><strong>Model Category:</strong> ' + getModelName(model) + '</p>';
+            html += '<p><strong>Warning Signs Present:</strong> ' + warningCount + '/8</p>';
+            html += '</div>';
+
+            // Model Description & Priority Actions
+            html += '<h3>1. Your Co-Parenting Model & What It Means</h3>';
+            html += getModelDescription(model);
+
+            // Warning Signs Analysis
+            if (warningCount >= 3) {
+                html += '<h3>2. URGENT: Impact on Your Child</h3>';
+                html += '<div class="warning-box">';
+                html += '<h4>⚠️ HIGH RISK: Your child is showing significant stress from co-parent conflict</h4>';
+                html += '<p>You checked ' + warningCount + ' warning signs. Research shows that at this level, children often:</p>';
+                html += '<ul>';
+                html += '<li>Experience performance anxiety and decreased enjoyment</li>';
+                html += '<li>Develop divided loyalties that interfere with focus</li>';
+                html += '<li>Are at higher risk of dropping out of sports entirely</li>';
+                html += '<li>May use sports as bargaining chip in parent conflicts</li>';
+                html += '</ul>';
+                html += '<p><strong>Immediate Action Required:</strong> Your child needs relief from this stress NOW. See emergency protocols below.</p>';
+                html += '<p class="citation">Coakley, J. (2006). The good father: Parental expectations and youth sports.</p>';
+                html += '</div>';
+            } else if (warningCount >= 1) {
+                html += '<h3>2. Warning Signs to Monitor</h3>';
+                html += '<div class="warning-box">';
+                html += '<h4>Moderate Concern: Some stress indicators present</h4>';
+                html += '<p>You checked ' + warningCount + ' warning sign(s). Take preventive action now before patterns worsen.</p>';
+                html += '</div>';
+            } else {
+                html += '<h3>2. Child Wellbeing Assessment</h3>';
+                html += '<div class="success-box">';
+                html += '<h4>✓ No major warning signs detected</h4>';
+                html += '<p>Your child does not appear to be showing significant stress from co-parent dynamics around sports.</p>';
+                html += '</div>';
+            }
+
+            // Communication Analysis
+            html += '<h3>3. Communication System Assessment</h3>';
+            if (data.commMethod === 'child') {
+                html += '<div class="warning-box">';
+                html += '<h4>⚠️ RED FLAG: Using child as messenger</h4>';
+                html += '<p>Using your child to relay sports information puts them in the middle of parent conflict. This must change immediately.</p>';
+                html += '<p><strong>Action:</strong> Establish direct communication channel this week (email, text, or co-parenting app).</p>';
+                html += '</div>';
+            } else if (data.commMethod === 'minimal') {
+                html += '<p><strong>Current approach:</strong> Minimal/no communication</p>';
+                html += '<p>This parallel approach can work if you add basic coordination structure (see recommendations).</p>';
+            } else {
+                html += '<p><strong>Current method:</strong> ' + getCommMethodName(data.commMethod) + '</p>';
+                if (data.conflictFreq === 'constant' || data.conflictFreq === 'frequent') {
+                    html += '<p><strong>Issue:</strong> High conflict frequency suggests current communication method isn\'t working. See revised protocols below.</p>';
+                } else {
+                    html += '<p>Current communication channel is functional. Focus on establishing clearer protocols.</p>';
+                }
+            }
+
+            // Calendar System
+            if (data.calendar === 'no') {
+                html += '<div class="info-box">';
+                html += '<h4>Quick Win Opportunity</h4>';
+                html += '<p>Adding a shared sports calendar is the single highest-impact action you can take. It eliminates 70% of logistical conflicts.</p>';
+                html += '<p><strong>Recommended tools:</strong> Google Calendar, Cozi, OurFamilyWizard, or Coparently</p>';
+                html += '</div>';
+            }
+
+            // Personalized Action Plan
+            html += '<h3>4. Your 30-Day Action Plan</h3>';
+            html += getActionPlan(model, data);
+
+            // Protocols & Frameworks
+            html += '<h3>5. Essential Protocols for Your Situation</h3>';
+            html += getProtocols(model, data);
+
+            // Specific Situation Guidance
+            if (data.situation) {
+                html += '<h3>6. Guidance for Your Specific Situation</h3>';
+                html += '<div class="info-box">';
+                html += '<p><strong>Your question:</strong> ' + data.situation + '</p>';
+                html += '<p><strong>Recommended approach:</strong> ' + getSpecificGuidance(data.situation, model) + '</p>';
+                html += '</div>';
+            }
+
+            // Resources
+            html += '<h3>7. Recommended Tools & Resources</h3>';
+            html += '<ul>';
+            html += '<li><strong>Communication apps:</strong> OurFamilyWizard (court-admissible), Coparently (free, user-friendly)</li>';
+            html += '<li><strong>Shared calendars:</strong> Google Calendar, Cozi Family Organizer</li>';
+            html += '<li><strong>The Quiet Edge resources:</strong> Parent Alignment Guide, Multi-Child Navigator</li>';
+            if (warningCount >= 3 || data.conflictFreq === 'constant') {
+                html += '<li><strong>Professional support:</strong> Consider co-parenting counselor who specializes in youth sports dynamics</li>';
+            }
+            html += '</ul>';
+
+            // Research References
+            html += '<h3>8. Research Foundation</h3>';
+            html += '<div class="citation">';
+            html += '<p>Markham, C. M., et al. (2019). Family connectedness and youth wellbeing.</p>';
+            html += '<p>Coakley, J. (2006). The good father: Parental expectations and youth sports. Leisure Studies, 25(2), 153-163.</p>';
+            html += '<p>Dorsch, T. E., et al. (2017). Stakeholder perspectives on climate in youth soccer programs.</p>';
+            html += '<p>Hellstedt, J. C. (1987). The coach/parent/athlete relationship. The Sport Psychologist, 1(2), 151-160.</p>';
+            html += '</div>';
+
+            // Display results
+            document.getElementById('resultsContent').innerHTML = html;
+            document.querySelectorAll('.step').forEach(step => step.classList.add('hidden'));
+            document.getElementById('results').style.display = 'block';
+            document.getElementById('progressBar').style.width = '100%';
+            window.scrollTo(0, 0);
+        }
+
+        function getModelName(model) {
+            const names = {
+                'cooperative': 'Cooperative Co-Parenting',
+                'parallel': 'Functional Parallel Co-Parenting',
+                'needs-structure': 'Needs Structure',
+                'conflicted': 'Conflicted Co-Parenting'
+            };
+            return names[model];
+        }
+
+        function getModelDescription(model) {
+            const descriptions = {
+                'cooperative': `
+                    <div class="model-box model-cooperative">
+                    <h4>✓ Cooperative Co-Parenting</h4>
+                    <p><strong>Characteristics:</strong> Regular communication, shared approach, coordinated logistics, unified messaging</p>
+                    <p><strong>Impact on Child:</strong> Reduced anxiety, clear expectations, freedom to focus on development</p>
+                    <p><strong>Your Priority:</strong> Maintain what's working! Use quarterly check-ins to prevent drift. Address small conflicts before they escalate.</p>
+                    </div>
+                `,
+                'parallel': `
+                    <div class="model-box model-parallel">
+                    <h4>Functional Parallel Co-Parenting</h4>
+                    <p><strong>Characteristics:</strong> Minimal communication, independent decision-making, some inconsistency between households</p>
+                    <p><strong>Impact on Child:</strong> Some confusion about expectations, but less anxiety than conflicted model</p>
+                    <p><strong>Your Priority:</strong> Add minimal coordination structure - shared calendar and basic decision framework. You don't need to be best friends, just functional partners in this one domain.</p>
+                    </div>
+                `,
+                'needs-structure': `
+                    <div class="model-box model-parallel">
+                    <h4>Needs Basic Structure</h4>
+                    <p><strong>Current State:</strong> Some cooperation but significant gaps creating stress</p>
+                    <p><strong>Your Priority:</strong> Implement communication protocols and decision framework. You're in the middle - can go either direction with consistent effort.</p>
+                    </div>
+                `,
+                'conflicted': `
+                    <div class="model-box model-conflicted">
+                    <h4>⚠️ Conflicted Co-Parenting (High Risk)</h4>
+                    <p><strong>Characteristics:</strong> Open disagreement, undermining each other, sports used as proxy battle</p>
+                    <p><strong>Impact on Child:</strong> High anxiety, divided loyalties, decreased performance, potential manipulation</p>
+                    <p><strong>Your Priority:</strong> HARM REDUCTION. Establish ground rules immediately. Your child needs relief from this stress. If you can't reduce conflict in 4-6 weeks, seek professional help.</p>
+                    </div>
+                `
+            };
+            return descriptions[model];
+        }
+
+        function getActionPlan(model, data) {
+            let html = '<div class="assessment-item">';
+            
+            html += '<h4>Week 1: Emergency Stabilization</h4>';
+            html += '<ol>';
+            if (model === 'conflicted' || data.warningCount >= 3) {
+                html += '<li><strong>Have private conversation with child:</strong> "I know things have been stressful. What would help you feel better about sports right now?"</li>';
+                html += '<li><strong>Temporary protocol:</strong> If you absolutely can\'t be civil at games together, alternate attendance for next 4 weeks</li>';
+                html += '<li><strong>Establish basic communication rule:</strong> All sports logistics via email/app - no phone calls that escalate</li>';
+            } else if (data.calendar === 'no') {
+                html += '<li><strong>Set up shared sports calendar</strong> (Google Calendar, Cozi, or co-parenting app)</li>';
+                html += '<li><strong>Add all known games, practices, events</strong> for next 4 weeks</li>';
+                html += '<li><strong>Establish update routine:</strong> Who enters new information? How quickly?</li>';
+            } else {
+                html += '<li><strong>Review current systems:</strong> What\'s working? What needs adjustment?</li>';
+                html += '<li><strong>Identify one specific pain point</strong> to address this month</li>';
+            }
+            html += '</ol>';
+
+            html += '<h4>Week 2-3: Communication Protocols</h4>';
+            html += '<ol>';
+            if (model === 'conflicted') {
+                html += '<li>Implement "24-hour response window" - neither parent expected to respond immediately</li>';
+                html += '<li>Use decision framework: categorize decisions as day-to-day, minor, or major (see protocols section)</li>';
+                html += '<li>NO disparaging comments about co-parent\'s sports approach in front of child</li>';
+            } else {
+                html += '<li>Have minimal alignment conversation: child\'s goals, success definition, financial split, communication preferences</li>';
+                html += '<li>Document agreements in shared document both can access</li>';
+            }
+            html += '</ol>';
+
+            html += '<h4>Week 4: Implementation & Assessment</h4>';
+            html += '<ol>';
+            html += '<li><strong>Check in with child:</strong> "Has anything felt different/better in the last few weeks?"</li>';
+            html += '<li><strong>Self-assess:</strong> Are new protocols reducing conflict? What needs adjustment?</li>';
+            if (data.warningCount >= 3) {
+                html += '<li><strong>Decision point:</strong> If child still showing 3+ warning signs, seek professional co-parenting support</li>';
+            }
+            html += '</ol>';
+
+            html += '</div>';
+            return html;
+        }
+
+        function getProtocols(model, data) {
+            let html = '';
+
+            if (model === 'conflicted' || data.conflictFreq === 'constant' || data.conflictFreq === 'frequent') {
+                html += '<h4>Communication Ground Rules (Non-Negotiable)</h4>';
+                html += '<div class="warning-box">';
+                html += '<ol>';
+                html += '<li><strong>Never disparage co-parent\'s sports approach in front of child</strong></li>';
+                html += '<li><strong>Use neutral communication method</strong> (email, app) - avoid phone if it escalates</li>';
+                html += '<li><strong>Stick to facts, avoid judgments</strong> ("Practice is 5:30" not "Unlike you, I\'m always on time")</li>';
+                html += '<li><strong>24-hour response window</strong> - reduces pressure, allows cooling off</li>';
+                html += '<li><strong>Child is NOT messenger</strong> - never use child to relay information</li>';
+                html += '</ol>';
+                html += '</div>';
+            }
+
+            html += '<h4>Decision Framework</h4>';
+            html += '<table>';
+            html += '<tr><th>Type</th><th>Examples</th><th>How Decided</th></tr>';
+            html += '<tr><td><strong>Day-to-day</strong></td><td>Practice attendance, pre-game meals, post-game talks</td><td>Each parent decides during their time</td></tr>';
+            html += '<tr><td><strong>Minor</strong></td><td>Equipment under $100, extra skills sessions, team events</td><td>Parent with child that week decides; inform other</td></tr>';
+            html += '<tr><td><strong>Major</strong></td><td>Team selection, specialization, >$500 commitments, travel teams</td><td>Joint decision required (see conflict resolution protocol if disagree)</td></tr>';
+            html += '</table>';
+
+            if (model === 'conflicted' || data.warningCount >= 2) {
+                html += '<h4>Public Behavior at Games</h4>';
+                html += '<ul>';
+                html += '<li>Sit separately if proximity creates tension</li>';
+                html += '<li>No visible disagreement during games (save it for private discussion)</li>';
+                html += '<li>Each parent can talk to child separately after - don\'t compete for first conversation</li>';
+                html += '<li><strong>The Standard:</strong> Would a stranger know you\'re divorced? If yes, you\'re creating stress for your child</li>';
+                html += '</ul>';
+            }
+
+            return html;
+        }
+
+        function getCommMethodName(method) {
+            const names = {
+                'text': 'Text messages',
+                'email': 'Email',
+                'app': 'Co-parenting app',
+                'phone': 'Phone calls',
+                'child': 'Through child (problematic)',
+                'minimal': 'Minimal communication'
+            };
+            return names[method] || method;
+        }
+
+        function getSpecificGuidance(situation, model) {
+            // Provide context-aware guidance based on situation description
+            const keywords = situation.toLowerCase();
+            let guidance = '';
+
+            if (keywords.includes('coach') || keywords.includes('sideline')) {
+                guidance = 'This is a common flashpoint. Protocol: (1) Private conversation between co-parents establishing "no coaching from sidelines" agreement. (2) If one parent continues, the other can request that only the non-coaching parent attend games for a trial period. (3) Focus on "let the coach coach" message to child - undermining coach undermines child\'s development. Consider sharing this concern with coach privately so they\'re aware.';
+            } else if (keywords.includes('specializ') || keywords.includes('focus') || keywords.includes('multi-sport')) {
+                guidance = 'Major decision requiring joint agreement. Research framework: Ages 8-12, multi-sport participation predicts better long-term outcomes (Côté, 1999). Early specialization increases injury risk and burnout. Recommend: (1) What does CHILD want? (2) Consult with coach for their honest assessment of elite potential. (3) Trial period approach: "Let\'s commit to this season and reassess" rather than permanent decision. (4) If you can\'t agree, default to less restrictive option (keep playing multiple sports).';
+            } else if (keywords.includes('quit') || keywords.includes('stop')) {
+                guidance = 'First: separate whether this is child\'s choice or being influenced by co-parent conflict. Ask child privately: "If sports logistics were easier, would you still want to quit?" If answer is "I still want to quit," respect that. If answer is "I like it but it\'s too much stress," that\'s a co-parenting problem you need to fix. Protocol: Each parent has private conversation with child. Share child\'s feedback with each other (not your interpretations, their actual words). Then decide together.';
+            } else if (keywords.includes('financ') || keywords.includes('money') || keywords.includes('cost')) {
+                guidance = 'Financial disputes often mask underlying disagreements about priorities. Transparent approach: (1) Get actual numbers for season (registration, equipment, travel, etc.). (2) Each parent proposes what feels fair to them and WHY (proportional to income? 50/50? based on custody time?). (3) Document agreement for this season. (4) Build in quarterly review. (5) Separate discussion: Is this investment worthwhile? If you disagree on value, that\'s different conversation about goals/priorities.';
+            } else if (keywords.includes('different') || keywords.includes('inconsistent') || keywords.includes('approach')) {
+                guidance = 'Some inconsistency is OK if neither approach is harmful. What matters: (1) Each parent is consistent within their own house. (2) Child understands different doesn\'t mean wrong. (3) You don\'t undermine each other. Where to align: definition of success, basic behavioral expectations, how to handle mistakes. Where you can differ: post-game routines, emphasis on winning, extra practice. Have ONE conversation defining shared non-negotiables, then give each other grace on the rest.';
+            } else if (keywords.includes('pressure') || keywords.includes('push')) {
+                guidance = 'Classic co-parent conflict: one feels other is pushing too hard or not enough. This requires honest conversation about goals. Use framework: (1) What are we each trying to accomplish? (2) What does research say about development at this age? (3) What does CHILD say they want? (4) What are signs we\'re in healthy vs unhealthy zone? Get specific: "Too much pressure" means what exactly? What behaviors would indicate problem? Define objectively so you\'re both watching for same signs.';
+            } else {
+                guidance = 'For your specific situation, the key steps are: (1) Private conversation with your child to understand their perspective. (2) Email your co-parent with factual description (no judgments). (3) Propose specific solution with timeframe. (4) If you can\'t agree, refer to your decision framework - is this day-to-day (each parent decides during their time), minor (inform but don\'t need permission), or major (must agree)?. (5) For major decisions where you disagree, consider consulting neutral third party (coach, family therapist, mediator).';
+            }
+
+            return guidance;
+        }
+
+        function resetTool() {
+            document.querySelectorAll('input, textarea, select').forEach(element => {
+                if (element.type === 'checkbox' || element.type === 'radio') {
+                    element.checked = false;
+                } else {
+                    element.value = '';
+                }
+            });
+            nextStep(1);
+            document.getElementById('results').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
